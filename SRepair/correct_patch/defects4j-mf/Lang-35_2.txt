@@ -1,0 +1,34 @@
+
+1:
+public static <T> T[] add(T[] array, T element) {
+    if (array == null && element == null) {
+        throw new IllegalArgumentException("Both array and element are null");
+    }
+
+    Class<?> type;
+    if (array != null){
+        type = array.getClass();
+    } else {
+        type = element.getClass();
+    }
+    @SuppressWarnings("unchecked") // type must be T
+    T[] newArray = (T[]) copyArrayGrow1(array, type);
+    newArray[newArray.length - 1] = element;
+    return newArray;
+}
+2:
+public static <T> T[] add(T[] array, int index, T element) {
+    if (array == null && element == null) {
+        throw new IllegalArgumentException("Both array and element are null");
+    }
+
+    Class<?> clss = null;
+    if (array != null) {
+        clss = array.getClass().getComponentType();
+    } else {
+        clss = element.getClass();
+    }
+    @SuppressWarnings("unchecked") // the add method creates an array of type clss, which is type T
+    final T[] newArray = (T[]) add(array, index, element, clss);
+    return newArray;
+}

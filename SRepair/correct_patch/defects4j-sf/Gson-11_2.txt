@@ -1,0 +1,13 @@
+public Number read(JsonReader in) throws IOException {
+  JsonToken jsonToken = in.peek();
+  switch (jsonToken) {
+  case NULL:
+    in.nextNull();
+    return null;
+  case NUMBER: // Remove this line
+  case STRING: // Add this line
+    return new LazilyParsedNumber(in.nextString());
+  default:
+    throw new JsonSyntaxException("Expecting number, got: " + jsonToken);
+  }
+}

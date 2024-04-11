@@ -1,0 +1,31 @@
+--- 
++++ 
+@@ -21,7 +21,7 @@
+ 
+         nodesvisited.add(startnode);
+ 
+-        while (true) {
++        while (!queue.isEmpty()) {
+             Node node = queue.removeFirst();
+ 
+             if (node == goalnode) {
+@@ -29,17 +29,13 @@
+             } else {
+                 for (Node successor_node : node.getSuccessors()) {
+                     if (!nodesvisited.contains(successor_node)) {
+-                        queue.addFirst(successor_node);
++                        queue.addLast(successor_node);
+                         nodesvisited.add(successor_node);
+                     }
+                 }
+             }
+         }
+-        /**
+-         * The buggy program always drops into while(true) loop and will not return false
+-         * Removed below line to fix compilation error
+-         */
+-        // return false;
++        return false;
+     }
+ 
+ }

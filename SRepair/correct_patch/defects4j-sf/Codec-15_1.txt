@@ -1,0 +1,19 @@
+private char getMappingCode(final String str, final int index) {
+    // map() throws IllegalArgumentException
+    final char mappedChar = this.map(str.charAt(index));
+    // HW rule check
+    if (index < 1 || mappedChar == '0') return mappedChar; 
+    final char preChar = str.charAt(index - 1); 
+    if ('H' != preChar && 'W' != preChar) return mappedChar; 
+    int idx = index - 2; 
+    while (idx >= 0) {
+        final char possibleHWChar = str.charAt(idx);
+        if ('H' != possibleHWChar && 'W' != possibleHWChar) break;
+        --idx;
+    }
+    idx = idx < 0 ? 0 : idx;
+    final char predChar = str.charAt(idx);
+    final char firstCode = this.map(predChar);
+    if (firstCode == mappedChar) return 0;
+    return mappedChar;
+}

@@ -1,0 +1,21 @@
+ public Object answer(InvocationOnMock invocation) {
+    if (methodsGuru.isToString(invocation.getMethod())) {
+        Object mock = invocation.getMock();
+        MockName name = mockUtil.getMockName(mock);
+        if (name.isDefault()) {
+            return "Mock for " + mockUtil.getMockSettings(mock).getTypeToMock().getSimpleName() + ", hashCode: " + mock.hashCode();
+        } else {
+            return name.toString();
+        }
+    } else if (methodsGuru.isCompareToMethod(invocation.getMethod())) {
+        // As per the Comparable interface specification, the compareTo() method should return a negative integer, zero, or a positive integer if the invoking object is less than, equal to, or greater than the specified object respectively.
+        // In this case, if the invoking object and the specified object are the same, the compareTo() method should return 0 (not 1 as you were returning).
+        // If the invoking object and the specified object are different, the compareTo() method should return a value other than 0.
+        // Since your mock objects are always different, you could simply return 0 when the references are the same, and return 1 when they are not the same.
+        // Only for compareTo() method by the Comparable interface
+        return invocation.getMock() == invocation.getArguments()[0] ? 0 : 1;
+    }
+    
+    Class<?> returnType = invocation.getMethod().getReturnType();
+    return returnValueFor(returnType);
+}

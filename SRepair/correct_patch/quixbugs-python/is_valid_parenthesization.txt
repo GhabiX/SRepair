@@ -1,0 +1,12 @@
+--- 
++++ 
+@@ -8,8 +8,7 @@
+             depth -= 1
+             if depth < 0:
+                 return False
+-
+-    return True
++    return depth == 0
+ 
+ 
+ """

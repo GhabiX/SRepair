@@ -1,0 +1,7 @@
+public Object generateId(Object forPojo) {
+    // [Issue#1255]: Need to always resolve id regardless of if it is serialized or not!
+    if (id == null) {
+        id = generator.generateId(forPojo); // Buggy Line
+    }
+    return id;
+}

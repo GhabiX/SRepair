@@ -1,0 +1,8 @@
+protected double getInitialDomain(double p) {
+    double ret = 1.0; // Initialize ret to 1
+    double d = getDenominatorDegreesOfFreedom(); // get denominator degrees of freedom
+    if (d > 2.0) { // check if denominator degrees of freedom is greater than 2
+        ret = d / (d - 2.0); // compute initial domain
+    }
+    return ret; // return the initial domain
+}

@@ -1,0 +1,15 @@
+protected Object readResolve() {
+    calculateHashCode(keys);
+    return this;
+}
+
+private void calculateHashCode(/* parameters needed for hash code calculation */) {
+    // Implement the logic here to recalculate the hash code
+    // Example: 
+    int hashCode = 0;
+    for (int i = 0; i < keys.length; i++) {
+        hashCode += keys[i].hashCode();
+    }
+    // set hashCode to the instance variable
+    this.hashCode = hashCode;
+}

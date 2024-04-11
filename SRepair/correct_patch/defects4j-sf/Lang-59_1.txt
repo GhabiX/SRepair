@@ -1,0 +1,18 @@
+public StrBuilder appendFixedWidthPadRight(Object obj, int width, char padChar) {
+    if (width > 0) {
+        ensureCapacity(size + width);
+        String str = (obj == null ? getNullText() : obj.toString());
+        int strLen = str.length();
+        if (strLen >= width) {			//if the string length is greater than or equal to the specified width, append the string to the buffer.
+            str.getChars(0, width, buffer, size);
+        } else {
+            int padLen = width - strLen;		//if the string length is less than the specified width, first append the string to the buffer.
+            str.getChars(0, strLen, buffer, size);		// Add a loop to append the padding characters to the buffer after appending the input string.
+            for (int i = 0; i < padLen; i++) {		// loop to add the padding characters to the buffer after appending the input string 
+                buffer[size + strLen + i] = padChar;		//Add a loop to append the padding characters to the buffer.
+            }
+        }
+        size += width;
+    }
+    return this;
+}

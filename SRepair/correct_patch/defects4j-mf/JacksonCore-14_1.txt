@@ -1,0 +1,16 @@
+
+1:
+protected final void _verifyRelease(byte[] toRelease, byte[] src) {
+    // 07-Mar-2016, tatu: As per [core#255], only prevent shrinking of buffer
+    if ((toRelease != src) && (toRelease.length < src.length)) { throw wrongBuf(); }
+}
+2:
+protected final void _verifyRelease(char[] toRelease, char[] src) {
+    // 07-Mar-2016, tatu: As per [core#255], only prevent shrinking of buffer
+    if ((toRelease != src) && (toRelease.length < src.length)) { throw wrongBuf(); }
+}
+3:
+private IllegalArgumentException wrongBuf() {
+    // sanity check failed; trying to return different, smaller buffer.
+    return new IllegalArgumentException("Buffer trying to be released is smaller than original buffer");
+}

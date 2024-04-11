@@ -1,0 +1,17 @@
+
+1:
+public JavaType constructType(Type type, Class<?> contextClass) {
+    if (contextClass == null) {
+        return constructType(type);
+    } else {
+        return constructType(type, constructType(contextClass));
+    }
+}
+2:
+public JavaType constructType(Type type, JavaType contextType) {
+    if (contextType == null) {
+        return constructType(type);
+    } else {
+        return _fromAny(null, type, contextType.getBindings());
+    }
+}

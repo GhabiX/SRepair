@@ -1,0 +1,7 @@
+ public double getSumSquaredErrors() {
+    double sumSquaredErrors = sumYY - sumXY * sumXY / sumXX;
+    if (sumSquaredErrors < 0) {
+        return 0;
+    }
+    return sumSquaredErrors;
+}

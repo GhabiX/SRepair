@@ -1,0 +1,24 @@
+public List<String> getMatchingOptions(String opt)
+{
+    opt = Util.stripLeadingHyphens(opt);
+    
+    List<String> matchingOpts = new ArrayList<String>();
+
+    // for an exact match return the single option only
+
+    for (String longOpt : longOpts.keySet())
+    {
+        if (longOpt.equals(opt))
+        {
+            matchingOpts.clear(); // Clear any previous matches
+            matchingOpts.add(longOpt);
+            break; // Stop searching once an exact match is found
+        }
+        else if (longOpt.startsWith(opt))
+        {
+            matchingOpts.add(longOpt);
+        }
+    }
+    
+    return matchingOpts;
+}

@@ -1,0 +1,5 @@
+protected Object readResolve() {
+    // Recalculate the hash code for the object
+    calculateHashCode(keys);
+    return this;
+}

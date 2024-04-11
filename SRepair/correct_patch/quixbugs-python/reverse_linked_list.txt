@@ -1,0 +1,10 @@
+--- 
++++ 
+@@ -3,6 +3,7 @@
+     while node:
+         nextnode = node.successor
+         node.successor = prevnode
++        prevnode = node
+         node = nextnode
+     return prevnode
+ 

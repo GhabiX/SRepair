@@ -1,0 +1,26 @@
+--- 
++++ 
+@@ -14,15 +14,18 @@
+         Node hare = node;
+         Node tortoise = node;
+ 
+-        while (true) {
+-            if (hare.getSuccessor() == null)
+-                return false;
++        boolean cycleDetected = false;
+ 
++        while (hare != null && hare.getSuccessor() != null) {
+             tortoise = tortoise.getSuccessor();
+             hare = hare.getSuccessor().getSuccessor();
+ 
+-            if (hare == tortoise)
+-                return true;
++            if (hare == tortoise) {
++                cycleDetected = true;
++                break;
++            }
+         }
++
++        return cycleDetected;
+     }
+ }

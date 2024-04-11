@@ -1,0 +1,21 @@
+--- 
++++ 
+@@ -14,15 +14,15 @@
+ 
+     public static int find_first_in_sorted(int[] arr, int x) {
+         int lo = 0;
+-        int hi = arr.length;
++        int hi = arr.length - 1; // change hi to arr.length - 1 because the array index starts from 0
+ 
+         while (lo <= hi) {
+-            int mid = (lo + hi) / 2; // check if this is floor division
++            int mid = lo + (hi - lo) / 2;
+ 
+             if (x == arr[mid] && (mid == 0 || x != arr[mid-1])) {
+                 return mid;
+             } else if (x <= arr[mid]) {
+-                hi = mid;
++                hi = mid - 1;
+             } else {
+                 lo = mid + 1;
+             }

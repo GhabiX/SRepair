@@ -1,0 +1,32 @@
+--- 
++++ 
+@@ -11,20 +11,20 @@
+  * @author derricklin
+  */
+ public class SUBSEQUENCES {
+-    public static ArrayList<ArrayList> subsequences(int a, int b, int k) {
++    public static ArrayList<ArrayList<Integer>> subsequences(int a, int b, int k) {
+         if (k == 0) {
+-            return new ArrayList();
++            ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
++            ret.add(new ArrayList<Integer>());
++            return ret;
+         }
+ 
+-        ArrayList ret = new ArrayList(50);
+-        for (int i=a; i<b+1-k; i++) {
+-            ArrayList base = new ArrayList(50);
+-            for (ArrayList rest : subsequences(i+1, b, k-1)) {
++        ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
++        for (int i=a; i<b; i++) {
++            ArrayList<ArrayList<Integer>> base = subsequences(i+1, b, k-1);
++            for (ArrayList<Integer> rest : base) {
+                 rest.add(0,i);
+-                base.add(rest);
++                ret.add(rest);
+             }
+-            ret.addAll(base);
+-
+         }
+ 
+         return ret;

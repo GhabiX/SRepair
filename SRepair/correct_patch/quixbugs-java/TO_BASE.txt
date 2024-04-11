@@ -1,0 +1,11 @@
+--- 
++++ 
+@@ -18,7 +18,7 @@
+         while (num > 0) {
+             i = num % b;
+             num = num / b; // floor division?
+-            result = result + String.valueOf(alphabet.charAt(i));
++            result = String.valueOf(alphabet.charAt(i)) + result;
+         }
+ 
+         return result;

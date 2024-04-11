@@ -1,0 +1,23 @@
+--- 
++++ 
+@@ -9,13 +9,17 @@
+     nodesseen.add(startnode)
+ 
+     while True:
++        if not queue:
++            return False
+         node = queue.popleft()
+ 
+-        if node is goalnode:
++        if node == goalnode:
+             return True
+         else:
+-            queue.extend(node for node in node.successors if node not in nodesseen)
+-            nodesseen.update(node.successors)
++            for neighbour in node.successors:
++                if neighbour not in nodesseen:
++                    queue.append(neighbour)
++                    nodesseen.add(neighbour)
+ 
+     return False
+ 

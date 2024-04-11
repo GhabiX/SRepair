@@ -1,0 +1,29 @@
+
+	public String absUrl(String attributeKey) {
+		Validate.notEmpty(attributeKey);
+		String relUrl = attr(attributeKey);
+		if (!hasAttr(attributeKey)) {
+			return ""; // nothing to make absolute with
+		} else {
+			URL base;
+			try {
+				try {
+					base = new URL(baseUri);
+				} catch (MalformedURLException e) {
+					// the base is unsuitable, but the attribute may be abs on its own, so try that
+					URL abs = new URL(relUrl);
+					return abs.toExternalForm();
+				}
+				// Provide a fix for the buggy function
+				// Fixing URL parsing logic
+				// Adjust the URL parsing logic to properly handle relative URLs with queries, ensuring that the absUrl method generates the correct absolute URL.
+				if (relUrl.startsWith("?"))
+					relUrl = base.getPath() + relUrl;
+				// workaround: java resolves '//path/file + ?foo' to '//path/?foo', not '//path/file?foo' as desired
+				URL abs = new URL(base, relUrl);
+				return abs.toExternalForm();
+			} catch (MalformedURLException e) {
+				return "";
+			}
+		}
+	}

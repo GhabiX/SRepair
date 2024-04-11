@@ -1,0 +1,16 @@
+public void acceptJsonFormatVisitor(JsonFormatVisitorWrapper visitor, JavaType typeHint) throws JsonMappingException
+{
+    if (_isInt) {
+        visitIntFormat(visitor, typeHint, JsonParser.NumberType.BIG_INTEGER);
+    } else {
+        Class<?> h = handledType();
+        if (h == BigDecimal.class) { 
+            // Provide a fix for the buggy function
+            // Fix the conditional statement in the acceptJsonFormatVisitor method to properly handle the case when the class is BigDecimal. This involves replacing the line "visitor.expectNumberFormat(typeHint);" with "visitFloatFormat(visitor, typeHint, JsonParser.NumberType.BIG_DECIMAL)".
+            visitFloatFormat(visitor, typeHint, JsonParser.NumberType.BIG_DECIMAL);
+        } else {
+            // otherwise bit unclear what to call... but let's try:
+            /*JsonNumberFormatVisitor v2 =*/ visitor.expectNumberFormat(typeHint);
+        }
+    }
+}

@@ -1,0 +1,8 @@
+public Object generateId(Object forPojo) 
+{
+  if (id == null)
+  {
+    id = generator.generateId(forPojo);
+  }
+  return id;
+}

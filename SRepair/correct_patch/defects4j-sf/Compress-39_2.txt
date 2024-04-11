@@ -1,0 +1,21 @@
+ public static String sanitize(String s) {
+        final char[] chars = s.toCharArray();
+        final int len = chars.length;
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            final char c = chars[i];
+            if (!Character.isISOControl(c)) {
+                Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
+                if (block != null && block != Character.UnicodeBlock.SPECIALS) {
+                    sb.append(c);
+                    continue;
+                }
+            }
+            sb.append('?');
+        }
+        String sanitizedString = sb.toString();
+        if(sanitizedString.length() > 255){
+            return sanitizedString.substring(0, 252) + "...";
+        }
+        return sanitizedString;
+    }

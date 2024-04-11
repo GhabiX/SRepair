@@ -1,0 +1,9 @@
+// Provide a fix for the buggy function
+// Use the correct parameters in the ValueMarker constructor
+// Change the `ValueMarker` constructor to set the outline paint and stroke using the correct parameters, rather than using the paint and stroke parameters twice.
+// Buggy Function
+public ValueMarker(double value, Paint paint, Stroke stroke, Paint outlinePaint, Stroke outlineStroke, float alpha) {
+    super(paint, stroke, outlinePaint, outlineStroke, alpha);
+    this.value = value;
+}
+// Fixed Function

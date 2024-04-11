@@ -1,0 +1,24 @@
+--- 
++++ 
+@@ -22,14 +22,15 @@
+         ArrayDeque opstack = new ArrayDeque();
+ 
+         for (Object token: tokens) {
+-            if (Integer.class.isInstance(token)) {
+-            // cover also Double case I guess?
+-                rpntokens.add((Integer) token);
+-            } else {
+-                String operator = (String) token;
+-                while (!opstack.isEmpty() && precedence.get(operator) <= precedence.get(opstack.getLast())) {
++            if (Integer.class.isInstance(token) || Double.class.isInstance(token)) {
++                rpntokens.add(token);
++            } else if (String.class.isInstance(token) && precedence.containsKey((String) token)) {
++                while (!opstack.isEmpty() && precedence.get((String) token) <= precedence.get(opstack.getLast().toString())) {
+                     rpntokens.add(opstack.pop());
+                 }
++                opstack.push(token);
++            } else if (String.class.isInstance(token) && !precedence.containsKey((String) token)) {
++                System.out.println("Invalid operator: " + token);
+             }
+         }
+ 

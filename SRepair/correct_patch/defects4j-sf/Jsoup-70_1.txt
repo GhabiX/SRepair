@@ -1,0 +1,17 @@
+static boolean preserveWhitespace(Node node) {
+    if (node != null && node instanceof Element) {
+        Element el = (Element) node;
+        // Recursively check for whitespace preservation at this element and its parent elements
+        for (int i = 0; i < 6; i++) {
+            if (el.tag().preserveWhitespace()) {
+                return true;
+            }
+            if (el.parent() != null) {
+                el = el.parent();
+            } else {
+                break;
+            }
+        }
+    }
+    return false;
+}

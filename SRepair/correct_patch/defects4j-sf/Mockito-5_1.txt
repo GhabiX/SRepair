@@ -1,0 +1,22 @@
+public void verify(VerificationData data) throws AssertionError {
+    AssertionError error = null;
+
+    timer.start();
+    while (timer.isCounting()) {
+        try {
+            delegate.verify(data);
+
+            if (returnOnSuccess) {
+                return;
+            } else {
+                error = null;
+            }
+        } catch (AssertionError e) {
+            error = handleVerifyException(e);
+        }
+    }
+
+    if (error != null) {
+        throw error;
+    }
+}

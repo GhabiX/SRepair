@@ -1,0 +1,16 @@
+/**
+ * Constructs a new ChecksumCalculatingInputStream.
+ *
+ * @param checksum the checksum to use for calculating the checksum of the input stream
+ * @param in the input stream to calculate the checksum for
+ * @throws NullPointerException if checksum or in is null
+ */
+public ChecksumCalculatingInputStream(final Checksum checksum, final InputStream in) {
+
+    if (checksum == null || in == null) {
+        throw new NullPointerException("checksum or in cannot be null");
+    }
+
+    this.checksum = checksum;
+    this.in = in;
+}

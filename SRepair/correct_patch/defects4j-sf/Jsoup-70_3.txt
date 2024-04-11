@@ -1,0 +1,14 @@
+static boolean preserveWhitespace(Node node) {
+    // checks at this level and up to five levels up
+    for (int i = 0; i < 6; i++) {
+        if (node != null && node instanceof Element) {
+            Element el = (Element) node;
+            if (el.tag.preserveWhitespace())
+                return true;
+            node = el.parent();
+        } else {
+            break;
+        }
+    }
+    return false;
+}

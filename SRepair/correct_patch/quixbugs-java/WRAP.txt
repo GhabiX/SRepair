@@ -1,0 +1,23 @@
+--- 
++++ 
+@@ -18,17 +18,16 @@
+     public static ArrayList<String> wrap(String text, int cols) {
+         ArrayList<String> lines = new ArrayList<String>();
+ 
+-        String line;
+         while (text.length() > cols) {
+-            int end = text.lastIndexOf(" ", cols); // off by one?
++            int end = text.lastIndexOf(" ", cols);
+             if (end == -1) {
+                 end = cols;
+             }
+-            line = text.substring(0,end);
++            lines.add(text.substring(0, end));
+             text = text.substring(end);
+-            lines.add(line);
+         }
+ 
++        lines.add(text);
+         return lines;
+     }
+ }

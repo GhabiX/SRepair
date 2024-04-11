@@ -1,0 +1,5 @@
+protected XmlSerializerProvider(XmlSerializerProvider src) {
+    super(src);
+    // Provide a fix for the buggy function
+    _rootNameLookup = new XmlRootNameLookup();
+}

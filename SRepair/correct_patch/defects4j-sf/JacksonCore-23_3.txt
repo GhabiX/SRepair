@@ -1,0 +1,6 @@
+public DefaultPrettyPrinter createInstance() throws IllegalStateException {
+    if (!this.getClass().equals(DefaultPrettyPrinter.class)) {
+        throw new IllegalStateException("The createInstance method must not be called with a subclass that does not override it.");
+    }
+    return new DefaultPrettyPrinter(this);
+}

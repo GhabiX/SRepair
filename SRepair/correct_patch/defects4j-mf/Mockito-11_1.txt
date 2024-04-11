@@ -1,0 +1,15 @@
+
+1:
+@Override
+public boolean equals(Object o) {
+    if (o instanceof DelegatingMethod) {
+        DelegatingMethod other = (DelegatingMethod) o;
+        return this.method.equals(other.method);
+    }
+    return this.method.equals(o);
+}
+2:
+@Override
+public int hashCode() {
+    return this.method.hashCode();
+}

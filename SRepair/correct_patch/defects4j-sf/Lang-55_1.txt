@@ -1,0 +1,9 @@
+public void stop() {
+    if(this.runningState != STATE_RUNNING && this.runningState != STATE_SUSPENDED) {// Line number 8
+        throw new IllegalStateException("Stopwatch is not running. ");
+    }
+    if(this.runningState == STATE_RUNNING) {// Add a condition to set the stopTime only if the stopwatch is running
+        stopTime = System.currentTimeMillis(); //Set the stopTime to the current time. This was the error causing the failure in the test.
+    }
+    this.runningState = STATE_STOPPED;
+}

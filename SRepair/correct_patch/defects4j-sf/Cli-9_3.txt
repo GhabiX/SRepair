@@ -1,0 +1,24 @@
+protected void checkRequiredOptions() 
+    throws MissingOptionException 
+{
+    // if there are required options that have not been
+    // processsed
+    if (getRequiredOptions().size() > 0) 
+    {
+        Iterator iter = getRequiredOptions().iterator();
+        StringBuffer buff = new StringBuffer("Missing ");
+
+        buff.append(getRequiredOptions().size() == 1 ? "required option" : "required options");
+        buff.append(": ");
+
+        // loop through the required options
+        while (iter.hasNext()) 
+        {
+            buff.append(iter.next());
+            if(iter.hasNext())
+                buff.append(", ");
+        }
+
+        throw new MissingOptionException(buff.toString());
+    }
+}

@@ -1,0 +1,15 @@
+private boolean isShortOption(String token)
+{
+    if (token.startsWith("-") && token.length() >= 2) {
+        String option = token.substring(1);
+        int index = option.indexOf("=");
+        if (index != -1) {
+            // If there is "=" in the option, only check the part before "="
+            return options.hasShortOption(option.substring(0, index));
+        } else {
+            // If there is no "=", check the whole option
+            return options.hasShortOption(option);
+        }
+    }
+    return false;
+}

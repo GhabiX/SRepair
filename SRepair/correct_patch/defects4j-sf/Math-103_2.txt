@@ -1,0 +1,12 @@
+public double cumulativeProbability(double x) throws MathException {
+    if (Math.abs(x - mean) > 20 * standardDeviation) {
+        // For extreme values, use a different method
+        if (x > mean) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    } else {
+        return 0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0))));
+    }
+}

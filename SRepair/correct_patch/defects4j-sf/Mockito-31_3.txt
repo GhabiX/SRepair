@@ -1,0 +1,16 @@
+private String formatMethodCall() {
+    StringBuffer sb = new StringBuffer();
+    sb.append(invocation.getMethod().getName());
+    sb.append("(");
+
+    Object[] args = invocation.getArguments();
+    for (int i = 0; i < args.length; i++) {
+        sb.append(args[i].toString());
+        if (i != args.length - 1) {
+            sb.append(", ");
+        }
+    }
+
+    sb.append(")");
+    return sb.toString();
+}

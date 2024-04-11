@@ -1,0 +1,42 @@
+// Provide a fix for the buggy function
+// Unit test enhancement
+// Create a specific unit test that covers the scenario of parsing an HTML string with an unclosed CDATA section. This test can help identify and prevent similar issues in the future and ensure the fix for the current bug is effective.
+
+// Buggy Function
+/*int nextIndexOf(CharSequence seq) {
+    / doesn't handle scanning for surrogates
+    char startChar = seq.charAt(0);
+    for (int offset = pos; offset < length; offset++) {
+        // scan to first instance of startchar:
+        if (startChar != input[offset])
+            while(++offset < length && startChar != input[offset]);
+        int i = offset + 1;
+        int last = i + seq.length()-1;
+        if (offset < length) {
+            for (int j = 1; i < last && seq.charAt(j) == input[i]; i++, j++);
+            if (i == last) // found full sequence
+                return offset - pos;
+        }
+    }
+    return -1;*/
+//}
+// Fixed Function
+int nextIndexOf(CharSequence seq)
+{
+	char startChar = seq.charAt(0);
+	for (int offset = pos; offset < length; offset++)
+	{
+		// scan to first instance of startchar:
+		if (startChar != input[offset])
+			while (++offset < length && startChar != input[offset]);
+		int i = offset + 1;
+		int last = i + seq.length() - 1;
+		if (offset < length && last <= length)
+		{
+			for (int j = 1; i < last && seq.charAt(j) == input[i]; i++, j++);
+			if (i == last) // found full sequence
+				return offset - pos;
+		}
+	}
+	return -1;
+}

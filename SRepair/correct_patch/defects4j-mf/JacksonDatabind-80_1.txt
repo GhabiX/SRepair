@@ -1,0 +1,84 @@
+
+1:
+@Override
+public Collection<NamedType> collectAndResolveSubtypesByClass(MapperConfig<?> config, 
+        AnnotatedMember property, JavaType baseType)
+{
+    final AnnotationIntrospector ai = config.getAnnotationIntrospector();
+    // for backwards compatibility, must allow null here:
+    Class<?> rawBase = (baseType == null) ? property.getRawType() : baseType.getRawClass();
+    
+    HashMap<NamedType, NamedType> collected = new HashMap<NamedType, NamedType>();
+    // start with registered subtypes (which have precedence)
+    if (_registeredSubtypes != null) {
+        for (NamedType subtype : _registeredSubtypes) {
+            // is it a subtype of root type?
+            if (rawBase.isAssignableFrom(subtype.getType())) { // yes
+                AnnotatedClass curr = AnnotatedClassResolver.resolveWithoutSuperTypes(config,
+                        subtype.getType());
+                _collectAndResolve(curr, subtype, config, ai, collected);
+            }
+        }
+    }
+    
+    // then annotated types for property itself
+    if (property != null) {
+        Collection<NamedType> st = ai.findSubtypes(property);
+        if (st != null) {
+            for (NamedType nt : st) {
+                AnnotatedClass ac = AnnotatedClassResolver.resolveWithoutSuperTypes(config,
+                        nt.getType());
+                _collectAndResolve(ac, nt, config, ai, collected);
+            }            
+        }
+    }
+
+    NamedType rootType = new NamedType(rawBase, null);
+    AnnotatedClass ac = AnnotatedClassResolver.resolveWithoutSuperTypes(config, rawBase);
+        
+    // and finally subtypes via annotations from base type (recursively)
+    _collectAndResolve(ac, rootType, config, ai, collected);
+
+    return new ArrayList<NamedType>(collected.values());
+}
+2:
+@Override
+public Collection<NamedType> collectAndResolveSubtypesByTypeId(MapperConfig<?> config, 
+        AnnotatedMember property, JavaType baseType)
+{
+    final AnnotationIntrospector ai = config.getAnnotationIntrospector();
+    Class<?> rawBase = baseType.getRawClass();
+
+    // Need to keep track of classes that have been handled already 
+    Set<Class<?>> typesHandled = new HashSet<Class<?>>();
+    Map<String,NamedType> byName = new LinkedHashMap<String,NamedType>();
+
+    // start with lowest-precedence, which is from type hierarchy
+    NamedType rootType = new NamedType(rawBase, null);
+    AnnotatedClass ac = AnnotatedClassResolver.resolveWithoutSuperTypes(config,
+            rawBase);
+    _collectAndResolveByTypeId(ac, rootType, config, typesHandled, byName);
+    
+    // then with definitions from property
+    if (property != null) {
+        Collection<NamedType> st = ai.findSubtypes(property);
+        if (st != null) {
+            for (NamedType nt : st) {
+                ac = AnnotatedClassResolver.resolveWithoutSuperTypes(config, nt.getType());
+                _collectAndResolveByTypeId(ac, nt, config, typesHandled, byName);
+            }            
+        }
+    }
+    // and finally explicit type registrations (highest precedence)
+    if (_registeredSubtypes != null) {
+        for (NamedType subtype : _registeredSubtypes) {
+            // is it a subtype of root type?
+            if (rawBase.isAssignableFrom(subtype.getType())) { // yes
+                AnnotatedClass curr = AnnotatedClassResolver.resolveWithoutSuperTypes(config,
+                        subtype.getType());
+                _collectAndResolveByTypeId(curr, subtype, config, typesHandled, byName);
+            }
+        }
+    }
+    return _combineNamedAndUnnamed(rawBase, typesHandled, byName);
+}

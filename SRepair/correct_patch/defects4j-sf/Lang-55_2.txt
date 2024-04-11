@@ -1,0 +1,9 @@
+public void stop() {
+    if(this.runningState != STATE_RUNNING && this.runningState != STATE_SUSPENDED) { // Make sure the watch state is either running or suspended
+        throw new IllegalStateException("Stopwatch is not running. ");
+    }
+    if(this.runningState == STATE_RUNNING) { // If running, record the stop time
+        stopTime = System.currentTimeMillis(); // Update the stop time
+    }
+    this.runningState = STATE_STOPPED; // Set the watch state to stopped
+}

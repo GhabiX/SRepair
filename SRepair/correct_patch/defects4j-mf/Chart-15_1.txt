@@ -1,0 +1,25 @@
+
+1:
+public double getMaximumExplodePercent() {
+    double result = 0.0;
+    Iterator iterator = this.dataset != null ? this.dataset.getKeys().iterator() : null;
+    while (iterator != null && iterator.hasNext()) {
+        Comparable key = (Comparable) iterator.next();
+        Number explode = (Number) (this.explodePercentages != null ? this.explodePercentages.get(key) : null);
+        if (explode != null) {
+            result = Math.max(result, explode.doubleValue());   
+        }
+    }
+    return result;
+}
+2:
+public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
+        PiePlot plot, Integer index, PlotRenderingInfo info) {
+ 
+    PiePlotState state = new PiePlotState(info);
+    state.setPassesRequired(2);
+    state.setTotal(this.dataset != null ? DatasetUtilities.calculatePieDatasetTotal(plot.getDataset()) : 0);
+    state.setLatestAngle(plot.getStartAngle());
+    return state;
+    
+}

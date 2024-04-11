@@ -1,0 +1,17 @@
+ public static boolean containsAny(CharSequence cs, char[] searchChars) {
+	if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
+		return false;
+	}
+	int csLength = cs.length();
+	int searchLength = searchChars.length;
+	for (int i = 0; i < csLength; i++) {
+		int codePoint = Character.codePointAt(cs, i);
+		for (int j = 0; j < searchLength; j++) {
+			if (Character.codePointAt(searchChars, j) == codePoint) {
+				return true;
+			}
+		}
+		i += Character.charCount(codePoint) - 1;
+	}
+	return false;
+}

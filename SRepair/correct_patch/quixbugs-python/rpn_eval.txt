@@ -1,0 +1,12 @@
+--- 
++++ 
+@@ -14,8 +14,8 @@
+         if isinstance(token, float):
+             stack.append(token)
+         else:
++            b = stack.pop()
+             a = stack.pop()
+-            b = stack.pop()
+             stack.append(
+                 op(token, a, b)
+             )

@@ -1,0 +1,10 @@
+--- 
++++ 
+@@ -7,6 +7,7 @@
+         elif node is goalnode:
+             return True
+         else:
++            nodesvisited.add(node)
+             return any(
+                 search_from(nextnode) for nextnode in node.successors
+             )

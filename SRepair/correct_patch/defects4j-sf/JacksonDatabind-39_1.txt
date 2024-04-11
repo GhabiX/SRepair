@@ -1,0 +1,15 @@
+public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException
+{
+    JsonToken t = p.getCurrentToken();
+    if (t == JsonToken.FIELD_NAME) {
+        // Need to consume the whole object to actually skip it
+        JsonToken t2 = p.nextToken();
+        while (t2 != null and t2 != JsonToken.END_OBJECT) {
+            p.skipChildren();
+            t2 = p.nextToken();
+        }
+    } else {
+        p.skipChildren();
+    }
+    return null;
+}

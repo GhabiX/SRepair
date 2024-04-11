@@ -1,0 +1,15 @@
+private boolean isShortOption(String token)
+{
+    // short options (-S, -SV, -S=V, -SV1=V2, -S1S2)
+    if (token.startsWith("-") && token.length() >= 2) {
+        if (token.contains("=")) {
+            // If the token contains "=", split it into two parts and check only the first part is a valid short option
+            String optionWithoutValue = token.split("=")[0];
+            return options.hasShortOption(optionWithoutValue.substring(1, optionWithoutValue.length()));
+        } else {
+            // Otherwise, check the whole token
+            return options.hasShortOption(token.substring(1, token.length()));
+        }
+    }
+    return false;
+}

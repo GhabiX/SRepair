@@ -1,0 +1,15 @@
+public double cumulativeProbability(double x) throws MathException {
+    final double dev = x - mean;
+    try {
+        if (dev > 40 * standardDeviation) {
+            return 1.0;
+        } else if (dev < -40 * standardDeviation) {
+            return 0.0;
+        } else {
+            return 0.5 * (1.0 + Erf.erf((dev) /
+                    (standardDeviation * FastMath.sqrt(2.0))));
+        }
+    } catch (MaxIterationsExceededException ex) {
+        throw ex;
+    }
+}

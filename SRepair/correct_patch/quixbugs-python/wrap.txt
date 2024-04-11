@@ -1,0 +1,20 @@
+--- 
++++ 
+@@ -1,11 +1,17 @@
+ def wrap(text, cols):
+     lines = []
+     while len(text) > cols:
++        # find a space to break at, starting from the end of the text
+         end = text.rfind(' ', 0, cols + 1)
+         if end == -1:
++            # no space found, break at the column width
+             end = cols
+         line, text = text[:end], text[end:]
+         lines.append(line)
++
++    # if there's any text left, add it to the list of lines
++    if text:
++        lines.append(text)
+ 
+     return lines
+ 

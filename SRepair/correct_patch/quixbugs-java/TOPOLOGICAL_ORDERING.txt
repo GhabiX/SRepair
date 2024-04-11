@@ -1,0 +1,27 @@
+--- 
++++ 
+@@ -4,9 +4,12 @@
+ public class TOPOLOGICAL_ORDERING {
+     public static ArrayList<Node> topological_ordering (List<Node> directedGraph) {
+         ArrayList<Node> orderedNodes = new ArrayList<Node>();
++        Set<Node> visited = new HashSet<Node>();
++
+         for (Node node : directedGraph) {
+-            if (node.getPredecessors().isEmpty()) {
++            if (node.getPredecessors().isEmpty() && !visited.contains(node)) {
+                 orderedNodes.add(node);
++                visited.add(node);
+             }
+         }
+ 
+@@ -14,8 +17,9 @@
+         for (int i = 0; i < listSize; i++) {
+             Node node = orderedNodes.get(i);
+             for (Node nextNode : node.getSuccessors()) {
+-                if (orderedNodes.containsAll(nextNode.getSuccessors()) && !orderedNodes.contains(nextNode)) {
++                if (!visited.contains(nextNode) && orderedNodes.containsAll(nextNode.getPredecessors())) {
+                     orderedNodes.add(nextNode);
++                    visited.add(nextNode);
+                     listSize++;
+                 }
+             }

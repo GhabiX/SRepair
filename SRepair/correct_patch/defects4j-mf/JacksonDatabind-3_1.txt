@@ -1,0 +1,62 @@
+
+1:
+@Override
+public String[] deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException
+{
+    // Ok: must point to START_ARRAY (or equivalent)
+    if (!jp.isExpectedStartArrayToken()) {
+        return handleNonArray(jp, ctxt);
+    }
+    if (_elementDeserializer != null) {
+        return _deserializeCustom(jp, ctxt);
+    }
+
+    final ObjectBuffer buffer = ctxt.leaseObjectBuffer();
+    Object[] chunk = buffer.resetAndStart();
+    
+    int ix = 0;
+    JsonToken t;
+    
+    while ((t = jp.nextToken()) != JsonToken.END_ARRAY) {
+        // Ok: no need to convert Strings, but must recognize nulls
+        String value;
+        if (t == JsonToken.VALUE_STRING) {
+            value = jp.getText();
+        } else if (t == JsonToken.VALUE_NULL) {
+            value = (_elementDeserializer == null) ? null : _elementDeserializer.getNullValue();
+        } else {
+            value = _parseString(jp, ctxt);
+        }
+        if (ix >= chunk.length) {
+            chunk = buffer.appendCompletedChunk(chunk);
+            ix = 0;
+        }
+        chunk[ix++] = value;
+    }
+    String[] result = buffer.completeAndClearBuffer(chunk, ix, String.class);
+    ctxt.returnObjectBuffer(buffer);
+    return result;
+}
+2:
+protected final String[] _deserializeCustom(JsonParser jp, DeserializationContext ctxt) throws IOException
+{
+    final ObjectBuffer buffer = ctxt.leaseObjectBuffer();
+    Object[] chunk = buffer.resetAndStart();
+    final JsonDeserializer<String> deser = _elementDeserializer;
+    
+    int ix = 0;
+    JsonToken t;
+    
+    while ((t = jp.nextToken()) != JsonToken.END_ARRAY) {
+        // Ok: no need to convert Strings, but must recognize nulls
+        String value = (t == JsonToken.VALUE_NULL && _elementDeserializer != null) ? _elementDeserializer.getNullValue() : deser.deserialize(jp, ctxt);
+        if (ix >= chunk.length) {
+            chunk = buffer.appendCompletedChunk(chunk);
+            ix = 0;
+        }
+        chunk[ix++] = value;
+    }
+    String[] result = buffer.completeAndClearBuffer(chunk, ix, String.class);
+    ctxt.returnObjectBuffer(buffer);
+    return result;
+}

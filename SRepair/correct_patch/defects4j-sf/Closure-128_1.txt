@@ -1,0 +1,19 @@
+static boolean isSimpleNumber(String s) {
+  if (s.isEmpty()) {
+    return false;
+  }
+
+  // Checking for leading zero
+  if (s.charAt(0) == '0') {
+    return s.length() == 1;
+  }
+
+  // Checking for digits
+  for (char c : s.toCharArray()) {
+    if (c < '0' || c > '9') {
+      return false;
+    }
+  }
+
+  return true;
+}

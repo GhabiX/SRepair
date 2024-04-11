@@ -1,0 +1,14 @@
+ public int parseInto(DateTimeParserBucket bucket, String text, int position) {
+    String str = text.substring(position);
+    String longestId = "";
+    for (String id : ALL_IDS) {
+        if (str.startsWith(id) && id.length() > longestId.length()) {
+            longestId = id;
+        }
+    }
+    if (!longestId.isEmpty()) {
+        bucket.setZone(DateTimeZone.forID(longestId));
+        return position + longestId.length();
+    }
+    return ~position;
+}

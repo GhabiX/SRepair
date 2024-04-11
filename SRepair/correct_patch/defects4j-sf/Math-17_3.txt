@@ -1,0 +1,3 @@
+public Dfp multiply(final int x) {
+    return field.newDfp(x).multiply(this); // Using the multiply operation with the single digit x
+}

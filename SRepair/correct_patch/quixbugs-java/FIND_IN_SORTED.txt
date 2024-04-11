@@ -1,0 +1,16 @@
+--- 
++++ 
+@@ -13,11 +13,11 @@
+         if (start == end) {
+             return -1;
+         }
+-        int mid = start + (end - start) / 2; // check this is floor division
++        int mid = start + (end - start) / 2;
+         if (x < arr[mid]) {
+             return binsearch(arr, x, start, mid);
+         } else if (x > arr[mid]) {
+-            return binsearch(arr, x, mid, end);
++            return binsearch(arr, x, mid + 1, end); // change mid to mid + 1
+         } else {
+             return mid;
+         }

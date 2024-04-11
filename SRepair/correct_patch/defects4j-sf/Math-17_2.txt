@@ -1,0 +1,3 @@
+public Dfp multiply(final int x) {
+        return multiply(field.newDfp(x));
+}

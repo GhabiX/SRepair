@@ -1,0 +1,8 @@
+public Attribute(String key, String val, Attributes parent) {
+    Validate.notNull(key);
+    key = key.trim(); // trim the key first
+    Validate.notEmpty(key); // validate the key after trimming
+    this.key = key; // assign the trimmed key to the attribute
+    this.val = val;
+    this.parent = parent;
+}

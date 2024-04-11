@@ -1,0 +1,14 @@
+
+1:
+protected final void _verifyRelease(byte[] toRelease, byte[] src) {
+    if ((toRelease != src) && (toRelease.length < src.length)) { throw wrongBuf(); }
+}
+2:
+protected final void _verifyRelease(char[] toRelease, char[] src) {
+    if ((toRelease != src) && (toRelease.length < src.length)) { throw wrongBuf(); }
+}
+3:
+private IllegalArgumentException wrongBuf() {
+    // sanity check failed; trying to return different, smaller buffer.
+    return new IllegalArgumentException("smaller than original"); 
+}

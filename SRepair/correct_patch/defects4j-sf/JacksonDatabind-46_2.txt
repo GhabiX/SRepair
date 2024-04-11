@@ -1,0 +1,16 @@
+public StringBuilder getGenericSignature(StringBuilder sb)
+{
+    // Provide a fix for the buggy function
+    // A possible solution to fix the bug is to properly handle the generic signature in the `getGenericSignature` method.
+    // You can modify the method to append the angle brackets and semicolon in a way that accurately represents the generic signature.
+    // You can ensure that the opening angle bracket is appended using `sb.append('<')` and the closing angle bracket with a
+    // semicolon is appended using `sb.append(">;")`.
+    // This adjustment will rectify the bug and align the behavior with the expected output.
+    _classSignature(_class, sb, false);
+    sb.append('<');  // Append an opening angle bracket '<'
+    sb = _referencedType.getGenericSignature(sb);
+    sb.append(">;");  // Append a closing angle bracket '>;'
+    // Provide a fix for the buggy function
+    return sb;
+    // Provide a fix for the buggy function
+}

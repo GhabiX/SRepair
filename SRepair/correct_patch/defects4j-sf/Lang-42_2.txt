@@ -1,0 +1,21 @@
+public void escape(Writer writer, String str) throws IOException {
+    int len = str.length();
+    for (int i = 0; i < len; i++) {
+        int c = str.codePointAt(i);
+        String entityName = this.entityName(c);
+        if (entityName == null) {
+            if (c > 0x7F) {
+                writer.write("&#");
+                writer.write(Integer.toString(c, 10));
+                writer.write(';');
+            } else {
+                writer.write((char)c);
+            }
+        } else {
+            writer.write('&');
+            writer.write(entityName);
+            writer.write(';');
+        }
+        if (c > Character.MAX_VALUE) i++; // move index by 2 if it's a surrogate pair
+    }
+}

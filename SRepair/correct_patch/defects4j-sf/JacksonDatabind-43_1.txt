@@ -1,0 +1,35 @@
+@Override
+public Object deserializeSetAndReturn(JsonParser p,
+		DeserializationContext ctxt, Object instance) throws IOException {
+	
+    Object id = null;
+    try {
+        id = _valueDeserializer.deserialize(p, ctxt);
+    } catch (NullPointerException e) {
+        System.out.println("NullPointerException occurred while trying to deserialize the id. This could be due to a null value in your JSON. Error message: " + e.getMessage());
+    } catch (JsonMappingException e) {
+        System.out.println("JsonMappingException occurred while trying to deserialize the id. Error message: " + e.getMessage());
+    }
+    
+    if (id == null) {
+        return null;
+    }
+    
+    try {
+        ReadableObjectId roid = ctxt.findObjectId(id, _objectIdReader.generator, _objectIdReader.resolver);
+        roid.bindItem(instance);
+    } catch (Exception e) {
+        System.out.println("Exception occurred while binding the id to the instance. Error message: " + e.getMessage());
+    }
+    
+    SettableBeanProperty idProp = _objectIdReader.idProperty;
+    if (idProp != null) {
+        try {
+            return idProp.setAndReturn(instance, id);
+        } catch (Exception e) {
+            System.out.println("Exception occurred while setting and returning the id property. Error message: " + e.getMessage());
+        }
+    }
+    
+    return instance;
+}

@@ -1,0 +1,19 @@
+private static String extractClassNameIfGoog(Node node, Node parent,
+    String functionName){
+    // Provide a fix for the buggy function
+    // Ensure that the target node is of type Token.STRING to extract the class name only when the target is a string.
+    String className = null;
+    if (NodeUtil.isExprCall(parent)) {
+      Node callee = node.getFirstChild();
+      if (callee != null && callee.getType() == Token.GETPROP) {
+        String qualifiedName = callee.getQualifiedName();
+        if (functionName.equals(qualifiedName)) {
+          Node target = callee.getNext();
+          if (target != null && target.getType() == Token.STRING) {
+            className = target.getString();
+          }
+        }// if (functionName.equals(qualifiedName))
+      }
+    }// if (NodeUtil.isExprCall(parent))
+    return className;
+}

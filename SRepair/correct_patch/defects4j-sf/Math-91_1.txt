@@ -1,0 +1,14 @@
+public int compareTo(Fraction object) {
+    Fraction thisFraction = this;
+    Fraction otherFraction = object;
+
+    long thisNumerator = thisFraction.getNumerator();
+    long thisDenominator = thisFraction.getDenominator();
+    long otherNumerator = otherFraction.getNumerator();
+    long otherDenominator = otherFraction.getDenominator();
+
+    long thisProduct = thisNumerator * otherDenominator;
+    long otherProduct = otherNumerator * thisDenominator;
+
+    return thisProduct < otherProduct ? -1 : (thisProduct > otherProduct ? 1 : 0);
+}

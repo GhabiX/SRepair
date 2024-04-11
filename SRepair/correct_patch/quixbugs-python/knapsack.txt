@@ -1,0 +1,18 @@
+--- 
++++ 
+@@ -7,11 +7,11 @@
+         weight, value = items[i - 1]
+ 
+         for j in range(1, capacity + 1):
+-            memo[i, j] = memo[i - 1, j]
+-
+-            if weight < j:
++            if weight > j:
++                memo[i, j] = memo[i - 1, j]
++            else:
+                 memo[i, j] = max(
+-                    memo[i, j],
++                    memo[i - 1, j],
+                     value + memo[i - 1, j - weight]
+                 )
+ 

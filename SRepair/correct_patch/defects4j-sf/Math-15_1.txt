@@ -1,0 +1,158 @@
+public static double pow(double x, double y) {
+        final double lns[] = new double[2];
+
+        if (y == 0.0) {
+            return 1.0;
+        }
+
+        if (x != x) { // X is NaN
+            return x;
+        }
+
+        if (x == 0) {
+            long bits = Double.doubleToLongBits(x);
+            if ((bits & 0x8000000000000000L) != 0) {
+                // -zero
+                long yi = (long) y;
+
+                if (y < 0 && y == yi && (yi & 1) == 1) {
+                    return Double.NEGATIVE_INFINITY;
+                }
+
+                if (y > 0 && y == yi && (yi & 1) == 1) {
+                    return -0.0;
+                }
+            }
+
+            if (y < 0) {
+                return Double.POSITIVE_INFINITY;
+            }
+            if (y > 0) {
+                return 0.0;
+            }
+
+            return Double.NaN;
+        }
+
+        if (x == Double.POSITIVE_INFINITY) {
+            if (y != y) { // y is NaN
+                return y;
+            }
+            if (y < 0.0) {
+                return 0.0;
+            } else {
+                return Double.POSITIVE_INFINITY;
+            }
+        }
+
+        if (y == Double.POSITIVE_INFINITY) {
+            if (x * x == 1.0) {
+                return Double.NaN;
+            }
+
+            if (x * x > 1.0) {
+                return Double.POSITIVE_INFINITY;
+            } else {
+                return 0.0;
+            }
+        }
+
+        if (x == Double.NEGATIVE_INFINITY) {
+            if (y != y) { // y is NaN
+                return y;
+            }
+
+            if (y < 0) {
+                long yi = (long) y;
+                if (y == yi && (yi & 1) == 1) {
+                    return -0.0;
+                }
+
+                return 0.0;
+            }
+
+            if (y > 0)  {
+                long yi = (long) y;
+                if (y == yi && (yi & 1) == 1) {
+                    return Double.NEGATIVE_INFINITY;
+                }
+
+                return Double.POSITIVE_INFINITY;
+            }
+        }
+
+        if (y == Double.NEGATIVE_INFINITY) {
+
+            if (x * x == 1.0) {
+                return Double.NaN;
+            }
+
+            if (x * x < 1.0) {
+                return Double.POSITIVE_INFINITY;
+            } else {
+                return 0.0;
+            }
+        }
+
+        /* Handle special case x<0 */
+        if (x < 0) {
+            // y is an even integer in this case
+            if (y >= 2*TWO_POWER_52 || y <= -2*TWO_POWER_52) {
+                return pow(-x, y);
+            }
+
+            if (y == (long) y) {
+                // If y is an integer
+                return ((long)y & 1) == 0 ? pow(-x, y) : -pow(-x, y);
+            } else {
+                return Double.NaN;
+            }
+        }
+
+        /* Split y into ya and yb such that y = ya+yb */
+        double ya;
+        double yb;
+        if (y < 8e298 && y > -8e298) {
+            double tmp1 = y * HEX_40000000;
+            ya = y + tmp1 - tmp1;
+            yb = y - ya;
+        } else {
+            double tmp1 = y * 9.31322574615478515625E-10;
+            double tmp2 = tmp1 * 9.31322574615478515625E-10;
+            ya = (tmp1 + tmp2 - tmp1) * HEX_40000000 * HEX_40000000;
+            yb = y - ya;
+        }
+
+        /* Compute ln(x) */
+        final double lores = log(x, lns);
+        if (Double.isInfinite(lores)){ // don't allow this to be converted to NaN
+            return lores;
+        }
+
+        double lna = lns[0];
+        double lnb = lns[1];
+
+        /* resplit lns */
+        double tmp1 = lna * HEX_40000000;
+        double tmp2 = lna + tmp1 - tmp1;
+        lnb += lna - tmp2;
+        lna = tmp2;
+
+        // y*ln(x) = (aa+ab)
+        final double aa = lna * ya;
+        final double ab = lna * yb + lnb * ya + lnb * yb;
+
+        lna = aa+ab;
+        lnb = -(lna - aa - ab);
+
+        double z = 1.0 / 120.0;
+        z = z * lnb + (1.0 / 24.0);
+        z = z * lnb + (1.0 / 6.0);
+        z = z * lnb + 0.5;
+        z = z * lnb + 1.0;
+        z = z * lnb;
+
+        final double result = exp(lna, z, null);
+        //result = result + result * z;
+        return result;
+    }

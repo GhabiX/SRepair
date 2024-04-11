@@ -1,0 +1,19 @@
+public static long skip(InputStream input, long numToSkip) throws IOException {
+    long available = numToSkip;
+    while (numToSkip > 0) {
+        long skipped = input.skip(numToSkip);
+        if (skipped == 0) {
+            // read() method is used as a fallback to skip the remaining bytes.
+            while (numToSkip > 0) {
+                int byteRead = input.read();
+                if (byteRead == -1) {
+                    break;
+                }
+                numToSkip--;
+            }
+            break;
+        }
+        numToSkip -= skipped;
+    }
+    return available - numToSkip;
+}

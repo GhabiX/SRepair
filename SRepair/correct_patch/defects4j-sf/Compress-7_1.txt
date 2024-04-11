@@ -1,0 +1,14 @@
+public static String parseName(byte[] buffer, final int offset, final int length) {
+    StringBuffer result = new StringBuffer(length);
+    int end = offset + length;
+
+    for (int i = offset; i < end; ++i) {
+        if (buffer[i] == 0) {
+            break;
+        }
+        // Use the UTF-8 character encoding to convert the byte to a character
+        result.append((char) (buffer[i] & 0xFF));
+    }
+
+    return result.toString();
+}

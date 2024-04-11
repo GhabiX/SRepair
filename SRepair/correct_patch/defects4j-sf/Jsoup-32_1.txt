@@ -1,0 +1,5 @@
+public Element clone() {
+    Element clone = (Element) super.clone();
+    clone.classNames = new HashSet<String>(classNames()); // Create a new Set of class names
+    return clone;
+}

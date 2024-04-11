@@ -1,0 +1,10 @@
+
+1:
+static Map<Object, Object> getRegistry() {
+    return REGISTRY.get() == null ? null : REGISTRY.get();
+}
+2:
+static boolean isRegistered(Object value) {
+    Map<Object, Object> m = getRegistry();
+    return m != null && m.containsKey(value);
+}

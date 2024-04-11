@@ -1,0 +1,25 @@
+--- 
++++ 
+@@ -3,14 +3,16 @@
+         return ''
+ 
+     elif a[0] == b[0]:
+-        return a[0] + longest_common_subsequence(a[1:], b)
++        return a[0] + longest_common_subsequence(a[1:], b[1:])
+ 
+     else:
+-        return max(
+-            longest_common_subsequence(a, b[1:]),
+-            longest_common_subsequence(a[1:], b),
+-            key=len
+-        )
++        seq1 = longest_common_subsequence(a, b[1:])
++        seq2 = longest_common_subsequence(a[1:], b)
++
++        if len(seq1) >= len(seq2):
++            return seq1
++        else:
++            return seq2
+ 
+ 
+ 

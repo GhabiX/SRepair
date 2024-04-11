@@ -1,0 +1,9 @@
+
+1:
+public boolean isSupportLowerBoundInclusive() {
+    return false;
+}
+2:
+public boolean isSupportUpperBoundInclusive() {
+    return true;
+}

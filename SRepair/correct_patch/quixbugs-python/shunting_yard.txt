@@ -1,0 +1,18 @@
+--- 
++++ 
+@@ -12,9 +12,14 @@
+     for token in tokens:
+         if isinstance(token, int):
+             rpntokens.append(token)
+-        else:
++        elif token in precedence:
+             while opstack and precedence[token] <= precedence[opstack[-1]]:
+                 rpntokens.append(opstack.pop())
++            opstack.append(token)
++        else:
++            while opstack and opstack[-1] in precedence and precedence[token] <= precedence[opstack[-1]]:
++                rpntokens.append(opstack.pop())
++            opstack.append(token)
+ 
+     while opstack:
+         rpntokens.append(opstack.pop())

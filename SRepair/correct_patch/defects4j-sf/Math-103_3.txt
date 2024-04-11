@@ -1,0 +1,11 @@
+public double cumulativeProbability(double x) throws MathException {
+    double mean = this.getMean();
+    double standardDeviation = this.getStandardDeviation();
+
+    if(x > (mean + 20 * standardDeviation) || x < (mean - 20 * standardDeviation)) {
+        return x > mean ? 1.0 : 0.0;
+    } else {
+        return 0.5 * (1.0 + Erf.erf((x - mean) /
+                (standardDeviation * Math.sqrt(2.0))));
+    }
+}

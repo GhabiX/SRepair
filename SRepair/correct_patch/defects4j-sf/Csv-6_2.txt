@@ -1,0 +1,10 @@
+<M extends Map<String, String>> M putIn(final M map) {
+    for (final Entry<String, Integer> entry : mapping.entrySet()){
+        final int col = entry.getValue().intValue();
+        if (col < values.length) { // Guard against short records
+            // If the guard is missing, an index-out-of-bound exception occurs
+            map.put(entry.getKey(), values[col]); 
+        }
+    }
+    return map;
+}

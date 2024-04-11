@@ -1,0 +1,17 @@
+--- 
++++ 
+@@ -16,11 +16,11 @@
+             Character paren = parens.charAt(i);
+             if (paren.equals('(')) {
+                 depth++;
+-            } else {
++            } else if (paren.equals(')')) {
+                 depth--;
+-                if (depth < 0) { return false; }
++                if (depth < 0) { return false;            }
+             }
+         }
+-        return true;
++        return depth == 0;
+     }
+ }

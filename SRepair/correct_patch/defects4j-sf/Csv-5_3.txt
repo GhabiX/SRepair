@@ -1,0 +1,7 @@
+public void println() throws IOException {
+    final String recordSeparator = format.getRecordSeparator();
+    if (recordSeparator != null) {
+        out.append(recordSeparator); // Out is an OutputStreamWriter
+    }
+    newRecord = true; // update the newRecord state
+}

@@ -1,0 +1,24 @@
+
+1:
+public ZipArchiveEntry(String name) {
+    super(name);
+    this.name = name; // Initialize the name field in the ZipArchiveEntry class
+}
+2:
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+        return false;
+    }
+    ZipArchiveEntry other = (ZipArchiveEntry) obj;
+    if (getName() == null) {
+        if (other.getName() != null) {
+            return false;
+        }
+    } else if (!getName().equals(other.getName())) {
+        return false;
+    }
+    return true;
+}

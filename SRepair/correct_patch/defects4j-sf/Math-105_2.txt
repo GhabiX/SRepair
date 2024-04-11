@@ -1,0 +1,8 @@
+public double getSumSquaredErrors() {
+    double result = sumYY - sumXY * sumXY / sumXX;
+    if(result < 0) {
+        return 0;
+    } else {
+        return result;
+    }
+}

@@ -1,0 +1,47 @@
+
+1:
+public OpenMapRealVector ebeDivide(RealVector v) {
+    checkVectorDimensions(v.getDimension());
+    OpenMapRealVector res = new OpenMapRealVector(this);
+    Iterator iter = new OpenMapRealVector(res).entries.iterator();
+    while (iter.hasNext()) {
+        iter.advance();
+        res.setEntry(iter.key(), iter.value() / v.getEntry(iter.key()));
+    }
+    return res;
+}
+2:
+@Override
+public OpenMapRealVector ebeDivide(double[] v) {
+    checkVectorDimensions(v.length);
+    OpenMapRealVector res = new OpenMapRealVector(this);
+    Iterator iter = new OpenMapRealVector(res).entries.iterator();
+    while (iter.hasNext()) {
+        iter.advance();
+        res.setEntry(iter.key(), iter.value() / v[iter.key()]);
+    }
+    return res;
+}
+3:
+public OpenMapRealVector ebeMultiply(RealVector v) {
+    checkVectorDimensions(v.getDimension());
+    OpenMapRealVector res = new OpenMapRealVector(this);
+    Iterator iter = new OpenMapRealVector(res).entries.iterator();
+    while (iter.hasNext()) {
+        iter.advance();
+        res.setEntry(iter.key(), iter.value() * v.getEntry(iter.key()));
+    }
+    return res;
+}
+4:
+@Override
+public OpenMapRealVector ebeMultiply(double[] v) {
+    checkVectorDimensions(v.length);
+    OpenMapRealVector res = new OpenMapRealVector(this);
+    Iterator iter = new OpenMapRealVector(res).entries.iterator();
+    while (iter.hasNext()) {
+        iter.advance();
+        res.setEntry(iter.key(), iter.value() * v[iter.key()]);
+    }
+    return res;
+}

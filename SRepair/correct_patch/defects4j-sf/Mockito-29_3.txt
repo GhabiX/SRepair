@@ -1,0 +1,8 @@
+public void describeTo(Description description) {
+    description.appendText("same(");
+    appendQuoting(description);
+    // FIX: Handle null case
+    description.appendText(wanted == null ? "null" : wanted.toString());
+    appendQuoting(description);
+    description.appendText(")");
+}

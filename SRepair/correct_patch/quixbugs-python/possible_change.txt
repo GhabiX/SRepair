@@ -1,0 +1,19 @@
+--- 
++++ 
+@@ -5,8 +5,14 @@
+     if total < 0:
+         return 0
+ 
+-    first, *rest = coins
+-    return possible_change(coins, total - first) + possible_change(rest, total)
++    dp = [0] * (total + 1)
++    dp[0] = 1
++
++    for coin in coins:
++        for i in range(coin, total + 1):
++            dp[i] += dp[i - coin]
++
++    return dp[total]
+ 
+ 
+ 

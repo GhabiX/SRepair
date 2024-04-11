@@ -1,0 +1,19 @@
+private boolean flipIfWarranted(final int n, final int step) {
+	// Provide a fix for the buggy function
+	// Refactor the flipIfWarranted method to improve its readability and maintainability. Consider breaking down the flipping logic into separate, self-contained steps or methods to improve the clarity and ease of understanding. By doing so, it may become easier to identify any issues with the flipping process and make necessary adjustments to ensure the correct flipping of the array.
+	// Buggy Function
+	if (1.5 * work[pingPong] < work[4 * (n - 1) + pingPong]) {
+		// flip array
+		int j = 4 * (n - 1);
+		for (int i = 0; i < j; i += 4) {
+			for (int k = 0; k < 4; k += step) {
+				final double tmp = work[i + k];
+				work[i + k] = work[j - k];
+				work[j - k] = tmp;
+			}
+			j -= 4;
+		}
+        return true;
+    }
+    return false;
+}

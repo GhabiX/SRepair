@@ -1,0 +1,84 @@
+
+1:
+@Override
+public ReadableObjectId findObjectId(Object id, ObjectIdGenerator<?> gen, ObjectIdResolver resolverType)
+{
+    /* 02-Apr-2015, tatu: As per [databind#742] should allow 'null', similar to how
+     *   missing id already works.
+     */
+
+    if(id == null) {
+        return null; // or throw an exception depending on your business logic
+    }
+
+    final ObjectIdGenerator.IdKey key = gen.key(id);
+
+    if (_objectIds == null) {
+        _objectIds = new LinkedHashMap<ObjectIdGenerator.IdKey,ReadableObjectId>();
+    } else {
+        ReadableObjectId entry = _objectIds.get(key);
+        if (entry != null) {
+            return entry;
+        }
+    }
+
+    // Not seen yet, must create entry and configure resolver.
+    ObjectIdResolver resolver = null;
+
+    if (_objectIdResolvers == null) {
+        _objectIdResolvers = new ArrayList<ObjectIdResolver>(8);
+    } else {
+        for (ObjectIdResolver res : _objectIdResolvers) {
+            if (res.canUseFor(resolverType)) {
+                resolver = res;
+                break;
+            }
+        }
+    }
+
+    if (resolver == null) {
+        resolver = resolverType.newForDeserialization(this);
+        // 19-Dec-2014, tatu: For final 2.5.0, remove temporary (2.4.x) work-around
+        //   needed to clear state between calls.
+        // !!! 18-Jun-2014, pgelinas: Temporary fix for [#490] until real
+        //    fix (for jackson-annotations, SimpleObjectIdResolver) can be added.
+        /*
+        if (resolverType.getClass() == SimpleObjectIdResolver.class) {
+            resolver = new SimpleObjectIdResolver();
+        }
+        */
+        _objectIdResolvers.add(resolver);
+    }
+
+    ReadableObjectId entry = new ReadableObjectId(key);
+    entry.setResolver(resolver);
+    _objectIds.put(key, entry);
+    return entry;
+}
+2:
+@Override
+public Object deserializeSetAndReturn(JsonParser jp,
+    		DeserializationContext ctxt, Object instance) throws IOException
+{
+    // note: no null checks (unlike usually); deserializer should fail if one found
+    Object id = _valueDeserializer.deserialize(jp, ctxt);
+
+    /* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;
+     *  missing or null id is needed for some cases, such as cases where id
+     *  will be generated externally, at a later point, and is not available
+     *  quite yet. Typical use case is with DB inserts.
+     */
+
+    if(id == null) {
+        return null; // or throw an exception depending on your business logic
+    }
+
+    ReadableObjectId roid = ctxt.findObjectId(id, _objectIdReader.generator, _objectIdReader.resolver);
+    roid.bindItem(instance);
+    // also: may need to set a property value as well
+    SettableBeanProperty idProp = _objectIdReader.idProperty;
+    if (idProp != null) {
+        return idProp.setAndReturn(instance, id);
+    }
+    return instance;
+}

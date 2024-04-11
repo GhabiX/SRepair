@@ -1,0 +1,39 @@
+--- 
++++ 
+@@ -1,17 +1,25 @@
+ def kth(arr, k):
+-    pivot = arr[0]
+-    below = [x for x in arr if x < pivot]
+-    above = [x for x in arr if x > pivot]
++    def quickselect(arr, k, pivot_fn):
++        if len(arr) == 1:
++            return arr[0]
+ 
+-    num_less = len(below)
+-    num_lessoreq = len(arr) - len(above)
++        pivot = pivot_fn(arr)
+ 
+-    if k < num_less:
+-        return kth(below, k)
+-    elif k >= num_lessoreq:
+-        return kth(above, k)
+-    else:
+-        return pivot
++        lows = [el for el in arr if el < pivot]
++        highs = [el for el in arr if el > pivot]
++        pivots = [el for el in arr if el == pivot]
++
++        if k < len(lows):
++            return quickselect(lows, k, pivot_fn)
++        elif k < len(lows) + len(pivots):
++            return pivots[0]
++        else:
++            return quickselect(highs, k - len(lows) - len(pivots), pivot_fn)
++
++    def pivot_first(arr):
++        return arr[0]
++
++    return quickselect(arr, k, pivot_first)
+ 
+ 
+ 

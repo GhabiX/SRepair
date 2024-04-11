@@ -1,0 +1,18 @@
+--- 
++++ 
+@@ -16,13 +16,8 @@
+             if nextnode in visited_nodes:
+                 continue
+ 
+-            insert_or_update(unvisited_nodes,
+-                (min(
+-                    get(unvisited_nodes, nextnode) or float('inf'),
+-                    get(unvisited_nodes, nextnode) + length_by_edge[node, nextnode]
+-                ),
+-                nextnode)
+-            )
++            new_distance = distance + length_by_edge[node, nextnode]
++            insert_or_update(unvisited_nodes, (new_distance, nextnode))
+ 
+     return float('inf')
+ 

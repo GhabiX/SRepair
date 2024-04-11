@@ -1,0 +1,20 @@
+--- 
++++ 
+@@ -5,11 +5,13 @@
+ 
+     for edge in sorted(weight_by_edge, key=weight_by_edge.__getitem__):
+         u, v = edge
+-        if group_by_node.setdefault(u, {u}) != group_by_node.setdefault(v, {v}):
++        group_u = group_by_node.setdefault(u, {u})
++        group_v = group_by_node.setdefault(v, {v})
++        if group_u != group_v:
+             mst_edges.add(edge)
+-            group_by_node[u].update(group_by_node[v])
+-            for node in group_by_node[v]:
+-                group_by_node[node].update(group_by_node[u])
++            new_group = group_u.union(group_v)
++            for node in new_group:
++                group_by_node[node] = new_group
+ 
+     return mst_edges
+ 

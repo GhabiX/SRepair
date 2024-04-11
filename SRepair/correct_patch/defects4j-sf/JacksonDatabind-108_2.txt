@@ -1,0 +1,9 @@
+@SuppressWarnings("unchecked")
+@Override
+public <T extends TreeNode> T readTree(JsonParser p) throws IOException {
+    JsonNode node = _bindAsTree(p);
+    if (node == null || node.isMissingNode() || node.isNull()) {
+        return null;
+    }
+    return (T) node;
+}

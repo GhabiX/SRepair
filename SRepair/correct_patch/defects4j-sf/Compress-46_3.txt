@@ -1,0 +1,6 @@
+private static ZipLong unixTimeToZipLong(long l) {
+    if (l > Integer.MAX_VALUE || l < Integer.MIN_VALUE) {
+        throw new IllegalArgumentException("Timestamp must fit in a signed 32 bit integer: " + l);
+    }
+    return new ZipLong((int)l);
+}

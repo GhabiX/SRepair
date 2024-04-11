@@ -1,0 +1,7 @@
+public void close() throws IOException {
+    if (!this.closed) {
+        this.finish(); // Ensure all data is written before closing the stream.
+        super.close();
+        this.closed = true;
+    }
+}

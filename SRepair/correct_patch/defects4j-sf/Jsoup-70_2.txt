@@ -1,0 +1,11 @@
+static boolean preserveWhitespace(Node node) {
+    for (int i = 0; i < 6; i++) {
+        if (node != null && node instanceof Element) {
+            Element el = (Element) node;
+            if (el.tag.preserveWhitespace())
+                return true;
+            node = el.parent();
+        }
+    }
+    return false;
+}
