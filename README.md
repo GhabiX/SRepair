@@ -20,18 +20,18 @@
 
 SRepair is the first function-level automated program repair technique, which can achieve remarkable repair performance by correctly fixing **300 single-function bugs**, largely surpassing the SOTA techniques, i.e., outperforming ChatRepair[1] by **85%** and Repilot[2] by **1.59×** in the Defects4J dataset, *without the need for the costly statement-level fault location information*. Specifically, the average cost per correctly fixed bug is **$0.029**, making SRepair an efficient LLM-based APR technique. Moreover, SRepair successfully fixes **32 multi-function bugs**, which is the first time achieved by any repairing technique ever to our best knowledge.
 
-## 🛠️SRepair Framework
+## 🛠️ SRepair Framework
 
 ![Untitled](./resource/SRepair_framework.png)
 
 As shown in figure above, SRepair first adopts a *repair suggestion mode*l which utilizes the learning power of LLM by comprehensively analyzing the *auxiliary repair-relevant information* (i.e., trigger tests, error messages, and comments) via the *Chain of Thought (CoT)* technique. Then it provides repair suggestions in natural language. Next, SRepair adopts a *patch generation model* which exhibits its code generation capabilities by generating the entire patched function following the repair suggestions. More specifically, we enable the *CoT* technique by prompting the LLM to first analyze the buggy function and project-specific information, then identify the root cause of the bug, and finally generate repair suggestions in natural language.
 
-## 📚Dataset 
+## 📚 Dataset 
 
 - **Defects4J 1.2 & 2.0**: Defects4J dataset which is the most widely used APR dataset with a collection of a total of 835 real-world bugs extracted from open-source Java projects, comprising both buggy and fixed versions of the source code. We include all function-level bugs from Defects4J 1.2 and 2.0, thereby forming a dataset that comprises 522 single-function bugs and an additional 143 multi-function bugs, i.e., the bugs existing in multiple functions and requiring simultaneous edits on them for a fix.
 - **QuixBugs Java & Python**: QuixBugs dataset is made up of 40 function-level buggy and fixed versions of classic programming problems in both Python and Java.
 
-## 📊Evaluation
+## 📊 Evaluation
 
 ### Metrics
 
@@ -45,7 +45,7 @@ As shown in figure above, SRepair first adopts a *repair suggestion mode*l which
 We find that SRepair outperforms all previous LLM-based APR techniques by at least **85%**. Specifically, we can observe that **68.4%** of single-function bugs (357) in Defects4J can be plausibly fixed, and even **57.5%** of bugs (300) can be correctly fixed by SRepair. Moreover, SRepair successfully fixes **32 multi-function bugs**, which is the first time achieved by any repairing technique ever to our best knowledge.Notably, SRepair successfully **fixes all bugs** in the QuixBugs dataset, indicating its superior capability for diverse programming languages.
 
 
-## **⚙️Environment requirements**
+## ⚙️ Environment requirements
 
 **OS**: A Linux system with **[Docker](https://docs.docker.com/engine/install/)** support. (Optional: [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker) support)
 
@@ -77,7 +77,7 @@ You can utilize the scripts we provide to pre-download the models to your local 
 | Magicoder-DS-6.7B     | 🤗 [HF Link](https://huggingface.co/ise-uiuc/Magicoder-DS-6.7B) | 6.7B | 66.5 (60.4)         | 75.4 (61.9)         | [DeepSeek](https://github.com/deepseek-ai/DeepSeek-Coder/blob/main/LICENSE-MODEL) |
 | Magicoder-*S*-DS-6.7B | 🤗 [HF Link](https://huggingface.co/ise-uiuc/Magicoder-S-DS-6.7B) | 6.7B | **76.8** (**70.7**) | **75.7** (**64.4**) | [DeepSeek](https://github.com/deepseek-ai/DeepSeek-Coder/blob/main/LICENSE-MODEL) |
 
-## 🚀Quick Start
+## 🚀 Quick Start
 
 ### SRepair: Repair Suggestion📥
 
