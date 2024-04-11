@@ -14,6 +14,7 @@
 |⚙️&nbsp;<a href="#⚙️Environment requirements">Environment requirements</a>
 |🚀&nbsp;<a href="#🚀quick-start">Quick Start</a>
 </p>
+
 > [!IMPORTANT]
 > Function-level repair is more dominant than the widely-adopted line-level or hunk-level repair techniques.
 
