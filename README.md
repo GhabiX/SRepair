@@ -8,10 +8,10 @@
 ## About
 
 <p align="left">
-🛠️&nbsp;<a href="#-srepair-framework">SRepair Framework</a>
+🛠️&nbsp;<a href="#-SRepair-Framework">SRepair Framework</a>
 |📚&nbsp;<a href="#-dataset">Dataset</a>
 |📊&nbsp;<a href="#-evaluation">Evaluation</a>
-|⚙️&nbsp;<a href="#-environment-requirements">Environment requirements</a>
+|⚙️&nbsp;<a href="#-Environment-requirements">Environment requirements</a>
 |🚀&nbsp;<a href="#-quick-start">Quick Start</a>
 </p>
 
