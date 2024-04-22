@@ -5,7 +5,12 @@
 - ***NO** need for costly statement-level fault location.*
 - *Fixes **multi-funciton bugs (32)** for the first time ever in business*
 
+
+
 ## About
+
+<a href="https://arxiv.org/abs/2404.12833"><img src="https://img.shields.io/badge/arXiv-2404.12833-b31b1b.svg?style=for-the-badge">
+<a href="https://twitter.com/arisesustch"><img src="https://img.shields.io/badge/@arisesustch-000000?style=for-the-badge&logo=x&logoColor=white">
 
 <p align="left">
 🛠️&nbsp;<a href="#%EF%B8%8F-srepair-framework">SRepair Framework</a>
