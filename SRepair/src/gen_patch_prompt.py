@@ -3,7 +3,7 @@ buggy_label = '// Buggy Function'
 fixed_label = '// Fixed Function'
 
 mf_start_prompt = 'This bug consists of multiple interdependent buggy functions, meaning that fix should be achieved by simultaneously modifying these functions.'
-mf_end_prompt = 'Povide fixed function for each buggy functions. Your output should be strictly in the format \'Function ID: {ID}\\nFixed function code:\\n{fixed function code}\' without any other content'
+mf_end_prompt = 'Provide fixed function for each buggy function. Your output should be strictly in the format \'Function ID: {ID}\\nFixed function code:\\n{fixed function code}\' without any other content.'
 
 
 def sf_build_apr_prompt_auto(buggy_function, root_cause, suggestion):
